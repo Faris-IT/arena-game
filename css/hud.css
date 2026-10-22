@@ -1,0 +1,12 @@
+#hud { position: fixed; top: 0; left: 0; right: 0; z-index: 10; display: flex;
+  justify-content: space-between; align-items: flex-start; padding: 10px 12px; pointer-events: none; }
+#hud[hidden] { display: none; }
+.bars { display: grid; gap: 6px; width: min(240px, 42vw); }
+.bar { height: 10px; background: rgba(255,255,255,.08); border: 1px solid var(--line); border-radius: 6px; overflow: hidden; }
+.bar span { display: block; height: 100%; width: 100%; transition: width .12s linear; }
+.bar.health span { background: var(--green); }
+.bar.energy span { background: var(--cyan); }
+.hud-right { display: flex; gap: 10px; align-items: center; pointer-events: auto; }
+#fps { font-size: .75rem; color: var(--muted); min-width: 2.4em; text-align: right; }
+#btn-pause { width: 40px; height: 40px; border-radius: 10px; border: 1px solid var(--line);
+  background: var(--panel); color: var(--text); font-weight: 700; }

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<title>Mufa Arena</title>
+<link rel="stylesheet" href="css/themes.css">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/hud.css">
+<link rel="stylesheet" href="css/mobile.css">
+</head>
+<body>
+<canvas id="arena"></canvas>
+
+<div id="hud" hidden>
+  <div class="bars">
+    <div class="bar health"><span id="hp-fill"></span></div>
+    <div class="bar energy"><span id="en-fill"></span></div>
+  </div>
+  <div class="hud-right">
+    <span id="fps">60</span>
+    <button id="btn-pause" type="button" aria-label="Pause">II</button>
+  </div>
+</div>
+
+<div id="touch" hidden>
+  <div class="stick" id="stick-move"><div class="knob"></div></div>
+  <div class="stick" id="stick-aim"><div class="knob"></div></div>
+</div>
+
+<div id="overlay" class="overlay">
+  <div class="panel">
+    <h1>Mufa Arena</h1>
+    <p class="tagline">Enter the Arena. Adapt. Survive.</p>
+    <p class="hint" id="hint-desktop">Gerak: WASD / panah &middot; Bidik: mouse &middot; Pause: Esc / P</p>
+    <p class="hint" id="hint-touch">Joystick kiri untuk gerak, joystick kanan untuk membidik.</p>
+    <button id="btn-main" type="button" class="primary">Mulai latihan gerak</button>
+  </div>
+</div>
+
+<script src="js/config.js"></script>
+<script src="js/game-state.js"></script>
+<script src="js/collision.js"></script>
+<script src="js/input.js"></script>
+<script src="js/player.js"></script>
+<script src="js/renderer.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/game-loop.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>
