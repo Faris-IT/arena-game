@@ -9,10 +9,13 @@ Buka `index.html` di browser, atau upload folder ini ke hosting statis (mis. Git
 - [x] Tahap 1 — Arena dan gerakan
 - [x] Tahap 2 — Pertarungan dasar
 - [x] Tahap 3 — Mode dasar (Arena Classic, Time Attack, Endless Survival, Crystal Hunt)
-- [ ] Tahap 4 — Mode objektif
+- [x] Tahap 4 — Mode objektif (Zone Control, Core Escort, Shadow Run, Closing Ring)
 - [ ] Tahap 5 — Kemampuan dan tantangan
 - [ ] Tahap 6 — Progres dan UI final
 - [ ] Tahap 7 — Pengujian dan rilis
+
+## Tutorial
+Pengunjung pertama langsung masuk tutorial interaktif 5 langkah. Tutorial juga tersedia sebagai mode "Tutorial" dan tombol "Cara bermain" di menu utama.
 
 ## Kontrol
 | Aksi | Desktop | Mobile |

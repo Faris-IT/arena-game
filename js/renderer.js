@@ -1,6 +1,6 @@
 (function (A) {
   const C = A.CONFIG, COL = C.colors, TAU = Math.PI * 2;
-  let canvas, ctx;
+  let canvas, ctx, shapes = null, lastT = 0;
 
   function resize() {
     const s = Math.min(innerWidth / C.width, innerHeight / C.height);
@@ -29,6 +29,26 @@
     ctx.stroke();
     ctx.strokeStyle = COL.wall; ctx.lineWidth = C.wall;
     ctx.strokeRect(C.wall / 2, C.wall / 2, C.width - C.wall, C.height - C.wall);
+  }
+
+  // Latar menu: bentuk geometris melayang pelan.
+  function menuBg() {
+    const now = performance.now(), dt = Math.min(0.05, (now - lastT) / 1000); lastT = now;
+    if (!shapes) {
+      const cols = ['#22e4ff', '#ff3df2', '#ff9a3c', '#4dff9a'], sd = [0, 3, 4, 6, 5];
+      shapes = [];
+      for (let i = 0; i < 26; i++) shapes.push({ x: Math.random() * C.width, y: Math.random() * C.height, r: 8 + Math.random() * 26,
+        sides: sd[i % 5], rot: Math.random() * TAU, vr: (Math.random() - 0.5) * 0.8,
+        vx: (Math.random() - 0.5) * 40, vy: (Math.random() - 0.5) * 40, c: cols[i % 4] });
+    }
+    ctx.lineWidth = 2; ctx.globalAlpha = 0.28;
+    for (const s of shapes) {
+      s.x = (s.x + s.vx * dt + C.width) % C.width; s.y = (s.y + s.vy * dt + C.height) % C.height; s.rot += s.vr * dt;
+      ctx.strokeStyle = s.c;
+      if (s.sides === 0) { ctx.beginPath(); ctx.arc(s.x, s.y, s.r, 0, TAU); } else polygon(s.x, s.y, s.r, s.sides, s.rot);
+      ctx.stroke();
+    }
+    ctx.globalAlpha = 1;
   }
 
   function drawEnemy(e) {
@@ -69,6 +89,8 @@
     init(cv) { canvas = cv; ctx = cv.getContext('2d'); resize(); addEventListener('resize', resize); },
     draw(s) {
       drawArena();
+      if (A.GameState.status === 'menu') { menuBg(); return; }
+      if (s.mode.drawBelow) s.mode.drawBelow(ctx, s);
       ctx.fillStyle = '#121a29'; ctx.strokeStyle = 'rgba(34,228,255,.55)'; ctx.lineWidth = 2;
       for (const o of s.obstacles) { ctx.fillRect(o.x, o.y, o.w, o.h); ctx.strokeRect(o.x, o.y, o.w, o.h); }
       const pulse = 1 + Math.sin(performance.now() / 220) * 0.12;
@@ -82,6 +104,7 @@
       s.enemies.forEach(drawEnemy);
       for (const b of s.projectiles) { ctx.fillStyle = b.color; ctx.beginPath(); ctx.arc(b.x, b.y, b.r, 0, TAU); ctx.fill(); }
       drawPlayer(s.player);
+      if (s.mode.drawAbove) s.mode.drawAbove(ctx, s);
     }
   };
 })(window.Arena);

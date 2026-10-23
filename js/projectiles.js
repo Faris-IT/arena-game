@@ -19,8 +19,9 @@
           if (e.hp <= 0) { e.dead = true; A.Scoring.onKill(s, e); }
           break; // satu proyektil hanya mengenai satu musuh
         }
-      } else if (A.Collision.circleHit(b, s.player)) {
-        if (A.Player.damage(s.player, b.damage)) b.dead = true;
+      } else {
+        if (s.core && s.core.hp > 0 && A.Collision.circleHit(b, s.core)) { s.core.hp -= b.damage; s.core.flash = 0.15; b.dead = true; continue; }
+        if (A.Collision.circleHit(b, s.player) && A.Player.damage(s.player, b.damage)) b.dead = true;
       }
     }
     let n = 0;

@@ -35,5 +35,11 @@
     for (const o of rects) if (x > o.x - r && x < o.x + o.w + r && y > o.y - r && y < o.y + o.h + r) return true;
     return false;
   }
-  A.Collision = { clampToArena, circleHit, pushOut, inRects };
+  // Apakah garis pandang antara dua titik terhalang penghalang padat?
+  function segBlocked(x1, y1, x2, y2, rects) {
+    const d = Math.hypot(x2 - x1, y2 - y1), n = Math.max(1, Math.ceil(d / 8));
+    for (let i = 1; i < n; i++) if (inRects(x1 + (x2 - x1) * i / n, y1 + (y2 - y1) * i / n, 0, rects)) return true;
+    return false;
+  }
+  A.Collision = { clampToArena, circleHit, pushOut, inRects, segBlocked };
 })(window.Arena);

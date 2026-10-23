@@ -8,5 +8,7 @@ Arena.EnemyData = {
   dasher:  { sides: 3, r: 12, speed: 95,  hp: 22, damage: 14, score: 25, color: '#ffd23c',
              dashSpeed: 560, windup: 0.6, dashTime: 0.35, cooldown: 1.8 },
   // Target bernilai tinggi (Time Attack): kabur dari pemain, tidak menyerang, menghilang jika dibiarkan.
+  // Target latihan (Tutorial): diam, tidak menyerang.
+  dummy:   { sides: 0, r: 16, speed: 0,   hp: 30, damage: 0, score: 5,  color: '#8a97ab' },
   target:  { sides: 5, r: 11, speed: 150, hp: 15, damage: 0, score: 50, color: '#fff27a', life: 7 }
 };

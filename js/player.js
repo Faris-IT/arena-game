@@ -30,11 +30,11 @@
   }
 
   function update(p, dt, s) {
-    const m = A.Input.getMove();
+    const m = A.Input.getMove(), spd = p.stats.speed * (s.mode.speedMul || 1); // mode bisa mengubah kecepatan
     // Percepatan halus yang tidak bergantung frame rate
     const k = 1 - Math.exp(-P.accel * dt);
-    p.vx += (m.x * p.stats.speed - p.vx) * k;
-    p.vy += (m.y * p.stats.speed - p.vy) * k;
+    p.vx += (m.x * spd - p.vx) * k;
+    p.vy += (m.y * spd - p.vy) * k;
     p.x += p.vx * dt; p.y += p.vy * dt;
 
     const hit = A.Collision.clampToArena(p);
@@ -52,7 +52,7 @@
     // Serangan dengan cooldown
     p.fireCd -= dt;
     if (p.invuln > 0) p.invuln -= dt;
-    if (p.fireCd <= 0 && (A.Input.firing || st.active || hasTarget(p, s.enemies))) {
+    if (p.fireCd <= 0 && !s.mode.noShoot && (A.Input.firing || st.active || hasTarget(p, s.enemies))) {
       A.Projectiles.spawn(s.projectiles, {
         x: p.x + Math.cos(p.aim) * p.r, y: p.y + Math.sin(p.aim) * p.r,
         vx: Math.cos(p.aim) * B.speed, vy: Math.sin(p.aim) * B.speed,

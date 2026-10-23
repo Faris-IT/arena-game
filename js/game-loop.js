@@ -11,10 +11,13 @@
     A.Projectiles.update(s, dt);
     A.Items.update(s, dt);
     A.Enemies.removeDead(s);
+    if (s.mode.noDeath && s.player.stats.health < 1) s.player.stats.health = 1; // mis. Tutorial
     const result = s.player.stats.health <= 0 ? 'lose' : s.mode.update(s, dt);
     if (result) {
       s.result = result;
-      s.newRecord = A.Storage.submitResult(s.mode, { score: s.score, time: s.time, wave: s.wave || 0, kills: s.kills, result });
+      s.newRecord = s.mode.noRecord ? false
+        : A.Storage.submitResult(s.mode, { score: s.score, time: s.time, wave: s.wave || 0, kills: s.kills, result });
+      if (s.mode.onEnd) s.mode.onEnd(s, result);
       A.GameState.set('gameover');
     }
   }
@@ -28,6 +31,7 @@
     frames++; acc += dt;
     if (acc >= 0.5) { A.UI.updateHud(A.state, Math.round(frames / acc)); frames = 0; acc = 0; }
     else A.UI.updateHud(A.state);
+    A.UI.updateCoach(A.state);
   }
 
   A.GameLoop = {

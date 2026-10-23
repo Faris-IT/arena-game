@@ -15,4 +15,7 @@
   A.Input.init(canvas);
   A.UI.init();
   A.GameLoop.start();
+
+  // Pengunjung baru langsung masuk tutorial.
+  if (!A.Storage.getFlag('tutorialDone')) { A.Game.newGame('tutorial'); A.GameState.start(); }
 })(window.Arena);

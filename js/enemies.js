@@ -5,7 +5,7 @@
     const d = D[type];
     list.push({ type, d, x, y, vx: 0, vy: 0, r: d.r, hp: d.hp, maxHp: d.hp, flash: 0, dead: false,
       state: 'move', st: 0, dx: 1, dy: 0, aim: 0, age: 0, slide: 0, sx: 0, sy: 0,
-      guardR: guardR || 0, aggro: false, side: Math.random() < 0.5 ? 1 : -1,
+      guardR: guardR || 0, aggro: false, tgt: null, coreCd: 0, side: Math.random() < 0.5 ? 1 : -1,
       cool: type === 'shooter' ? 0.5 + Math.random() : 1 + Math.random() });
   }
 
@@ -26,12 +26,14 @@
   function update(s, dt) {
     const list = s.enemies, p = s.player;
     for (const e of list) {
-      const d = e.d, dx = p.x - e.x, dy = p.y - e.y, dist = Math.hypot(dx, dy) || 1, nx = dx / dist, ny = dy / dist;
+      const tg = (e.tgt && e.tgt.hp > 0) ? e.tgt : p; // sebagian musuh menyerang inti (Core Escort)
+      const d = e.d, dx = tg.x - e.x, dy = tg.y - e.y, dist = Math.hypot(dx, dy) || 1, nx = dx / dist, ny = dy / dist;
       if (e.flash > 0) e.flash -= dt;
+      if (e.coreCd > 0) e.coreCd -= dt;
       e.aim = Math.atan2(ny, nx);
       if (d.life) { e.age += dt; if (e.age > d.life) { e.dead = true; continue; } } // menghilang tanpa dihitung kill
       if (e.guardR && !e.aggro) { // penjaga diam sampai pemain mendekat
-        if (dist < e.guardR) e.aggro = true; else { e.vx = e.vy = 0; continue; }
+        if (Math.hypot(p.x - e.x, p.y - e.y) < e.guardR) e.aggro = true; else { e.vx = e.vy = 0; continue; }
       }
 
       if (e.type === 'shooter') {
@@ -84,7 +86,12 @@
 
   // Damage sentuhan; jeda kebal pemain mencegah damage ganda.
   function contact(s) {
-    for (const e of s.enemies) if (!e.dead && e.d.damage > 0 && A.Collision.circleHit(e, s.player)) A.Player.damage(s.player, e.d.damage);
+    const core = s.core;
+    for (const e of s.enemies) {
+      if (e.dead || e.d.damage <= 0) continue;
+      if (A.Collision.circleHit(e, s.player)) A.Player.damage(s.player, e.d.damage);
+      if (core && core.hp > 0 && e.coreCd <= 0 && A.Collision.circleHit(e, core)) { core.hp -= e.d.damage; core.flash = 0.15; e.coreCd = 0.8; }
+    }
   }
 
   function removeDead(s) {

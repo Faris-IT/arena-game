@@ -1,0 +1,59 @@
+// Tutorial interaktif: 5 langkah singkat. Tidak bisa kalah dan tidak mencatat rekor.
+(function (A) {
+  const U = A.Util;
+  const touch = () => document.body.classList.contains('touch');
+  const STEPS = [
+    { title: 'Bergerak',
+      d: 'Gunakan WASD atau tombol panah untuk bergerak. Jelajahi arena sebentar.',
+      t: 'Gunakan joystick kiri untuk bergerak. Jelajahi arena sebentar.',
+      prog: s => Math.min(1, s.tut.moved / 400), done: s => s.tut.moved >= 400 },
+    { title: 'Bidik dan tembak',
+      d: 'Arahkan bidikan dengan mouse, klik atau tekan Space untuk menembak. Tembakan juga otomatis jika musuh searah bidikan. Hancurkan 3 target.',
+      t: 'Joystick kanan membidik sekaligus menembak. Hancurkan 3 target.',
+      enter(s) { [[700, 170], [745, 300], [700, 430]].forEach(p => A.Enemies.spawn(s.enemies, 'dummy', p[0], p[1])); },
+      prog: s => Math.min(1, s.kills / 3), done: s => s.kills >= 3 },
+    { title: 'Hindari dan kalahkan',
+      d: 'Sentuhan musuh dan proyektil mengurangi health (bar hijau di kiri atas). Terus bergerak, hindari tembakan, lalu kalahkan Chaser dan Shooter.',
+      t: 'Sentuhan musuh dan proyektil mengurangi health (bar hijau). Terus bergerak, hindari tembakan, lalu kalahkan Chaser dan Shooter.',
+      enter(s) { A.Enemies.spawnAtEdge(s.enemies, 'chaser', s.player); A.Enemies.spawnAtEdge(s.enemies, 'shooter', s.player); },
+      prog: s => 1 - s.enemies.length / 2, done: s => s.enemies.length === 0 },
+    { title: 'Ambil item penyembuh',
+      d: 'Sentuh item hijau untuk memulihkan health. Item punya batas waktu pada mode asli.',
+      t: 'Sentuh item hijau untuk memulihkan health. Item punya batas waktu pada mode asli.',
+      enter(s) { s.player.stats.health = Math.min(s.player.stats.health, 40); A.Items.spawnHeal(s, 60, 9999); },
+      prog: s => (s.items.length === 0 ? 1 : 0), done: s => s.items.length === 0 },
+    { title: 'Jeda permainan',
+      d: 'Tekan Esc atau P untuk menjeda, lalu pilih Lanjutkan.',
+      t: 'Tekan tombol II di kanan atas untuk menjeda, lalu pilih Lanjutkan.',
+      prog: s => (A.GameState.pauseCount > s.tut.pauseBase ? 1 : 0), done: s => A.GameState.pauseCount > s.tut.pauseBase }
+  ];
+
+  function enter(s) { const st = STEPS[s.tut.i]; if (st && st.enter) st.enter(s); }
+
+  U.register({
+    id: 'tutorial', name: 'Tutorial', difficulty: 'Mudah', noRecord: true, noDeath: true, retryLabel: 'Ulangi tutorial',
+    objective: 'Pelajari gerak, bidik, tembak, dan item dalam 5 langkah singkat.',
+    rules: 'Tanpa risiko kalah. Bisa diulang kapan saja.',
+    start(s) {
+      s.tut = { i: 0, moved: 0, lx: s.player.x, ly: s.player.y, pauseBase: A.GameState.pauseCount, endT: 0 };
+      enter(s);
+    },
+    hud() { return 'Tutorial'; },
+    coach(s) {
+      const t = s.tut, n = STEPS.length;
+      if (t.i >= n) return { n, total: n, title: 'Tutorial selesai!', text: 'Kamu siap bermain. Sebentar lagi kamu diarahkan ke menu.', p: 1 };
+      const st = STEPS[t.i];
+      return { n: t.i + 1, total: n, title: st.title, text: touch() ? st.t : st.d, p: st.prog(s) };
+    },
+    endTitle() { return 'Tutorial selesai!'; },
+    endSummary() { return 'Kamu sudah siap. Pilih mode di menu utama.'; },
+    onEnd(s, result) { if (result === 'win') A.Storage.setFlag('tutorialDone'); },
+    update(s, dt) {
+      const t = s.tut, p = s.player;
+      t.moved += Math.hypot(p.x - t.lx, p.y - t.ly); t.lx = p.x; t.ly = p.y;
+      if (t.i >= STEPS.length) { t.endT += dt; return t.endT > 2.5 ? 'win' : null; }
+      if (STEPS[t.i].done(s)) { t.i++; if (t.i < STEPS.length) enter(s); }
+      return null;
+    }
+  });
+})(window.Arena);

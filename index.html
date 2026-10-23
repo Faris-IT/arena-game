@@ -10,7 +10,7 @@
 <link rel="stylesheet" href="css/hud.css">
 <link rel="stylesheet" href="css/mobile.css">
 </head>
-<body>
+<body data-status="menu">
 <canvas id="arena"></canvas>
 
 <div id="hud" hidden>
@@ -26,6 +26,13 @@
   </div>
 </div>
 
+<div id="coach" hidden>
+  <div class="coach-top"><span id="coach-step"></span><button id="coach-skip" type="button" class="ghost">Lewati tutorial</button></div>
+  <strong id="coach-title"></strong>
+  <p id="coach-text"></p>
+  <div class="coach-track"><span id="coach-bar"></span></div>
+</div>
+
 <div id="touch" hidden>
   <div class="stick" id="stick-move"><div class="knob"></div></div>
   <div class="stick" id="stick-aim"><div class="knob"></div></div>
@@ -33,21 +40,23 @@
 
 <div id="overlay" class="overlay">
   <div class="panel">
+    <span class="badge" id="badge">Game #4 &middot; Mufa Games</span>
     <h1>Mufa Arena</h1>
     <p class="tagline" id="tagline">Enter the Arena. Adapt. Survive.</p>
-    <p class="hint" id="hint-desktop">Gerak: WASD / panah &middot; Bidik: mouse &middot; Tembak: klik / Space (otomatis jika musuh searah bidikan) &middot; Pause: Esc / P</p>
-    <p class="hint" id="hint-touch">Joystick kiri untuk gerak. Joystick kanan membidik dan menembak.</p>
     <p class="summary" id="summary" hidden></p>
     <button id="btn-main" type="button" class="primary">Pilih mode</button>
+    <button id="btn-tutorial" type="button" class="ghost">Cara bermain (tutorial)</button>
     <button id="btn-menu" type="button" class="ghost" hidden>Menu utama</button>
+    <p class="hint" id="hint-desktop">WASD / panah: gerak &middot; Mouse: bidik &middot; Klik / Space: tembak &middot; Esc / P: jeda</p>
+    <p class="hint" id="hint-touch">Joystick kiri: gerak &middot; Joystick kanan: bidik dan tembak</p>
   </div>
 </div>
 
 <div id="modes" class="overlay" hidden>
   <div class="modes-wrap">
-    <header><button id="btn-back" type="button" class="ghost">Kembali</button><h2>Pilih mode</h2></header>
+    <header><button id="btn-back" type="button" class="ghost">&larr; Kembali</button><h2>Pilih mode</h2></header>
     <div id="mode-grid"></div>
-    <p class="note">8 mode lainnya dibuka di Tahap 4 dan 5.</p>
+    <p class="note">4 mode lainnya (Boss Rush, Build &amp; Survive, Hazard Lab, Tactical Trials) dibuka di Tahap 5.</p>
   </div>
 </div>
 
@@ -64,10 +73,15 @@
 <script src="js/enemies.js"></script>
 <script src="js/renderer.js"></script>
 <script src="modes/common.js"></script>
+<script src="modes/tutorial.js"></script>
 <script src="modes/classic.js"></script>
 <script src="modes/time-attack.js"></script>
 <script src="modes/survival.js"></script>
 <script src="modes/crystal-hunt.js"></script>
+<script src="modes/zone-control.js"></script>
+<script src="modes/core-escort.js"></script>
+<script src="modes/shadow-run.js"></script>
+<script src="modes/closing-ring.js"></script>
 <script src="js/ui.js"></script>
 <script src="js/game-loop.js"></script>
 <script src="js/main.js"></script>

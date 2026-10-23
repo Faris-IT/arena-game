@@ -1,13 +1,16 @@
 (function (A) {
   const KEY = 'mufa-arena:v1';
   const num = v => (typeof v === 'number' && isFinite(v) && v >= 0 ? v : 0);
-  const blank = () => ({ records: {}, stats: { games: 0, wins: 0, kills: 0, time: 0 } });
+  const blank = () => ({ records: {}, stats: { games: 0, wins: 0, kills: 0, time: 0 }, flags: {} });
 
   // Data kosong atau rusak ditangani dengan aman: kembali ke data awal.
   function load() {
     try {
       const d = JSON.parse(localStorage.getItem(KEY));
-      if (d && typeof d === 'object' && d.records && typeof d.records === 'object' && d.stats && typeof d.stats === 'object') return d;
+      if (d && typeof d === 'object' && d.records && typeof d.records === 'object' && d.stats && typeof d.stats === 'object') {
+        if (!d.flags || typeof d.flags !== 'object') d.flags = {};
+        return d;
+      }
     } catch (e) { /* abaikan */ }
     return blank();
   }
@@ -37,5 +40,8 @@
     return newRecord;
   }
 
-  A.Storage = { getRecord, submitResult };
+  function getFlag(k) { return load().flags[k] === true; }
+  function setFlag(k) { const d = load(); d.flags[k] = true; save(d); }
+
+  A.Storage = { getRecord, submitResult, getFlag, setFlag };
 })(window.Arena);
