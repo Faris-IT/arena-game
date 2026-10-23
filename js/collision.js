@@ -8,5 +8,9 @@
     if (e.y < min) { e.y = min; hit.y = true; } else if (e.y > maxY) { e.y = maxY; hit.y = true; }
     return hit;
   }
-  A.Collision = { clampToArena };
+  function circleHit(a, b) {
+    const dx = a.x - b.x, dy = a.y - b.y, r = a.r + b.r;
+    return dx * dx + dy * dy < r * r;
+  }
+  A.Collision = { clampToArena, circleHit };
 })(window.Arena);

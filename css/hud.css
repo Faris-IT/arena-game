@@ -10,3 +10,5 @@
 #fps { font-size: .75rem; color: var(--muted); min-width: 2.4em; text-align: right; }
 #btn-pause { width: 40px; height: 40px; border-radius: 10px; border: 1px solid var(--line);
   background: var(--panel); color: var(--text); font-weight: 700; }
+#wave, #score { font-size: .85rem; color: var(--text); }
+#score { color: var(--orange); min-width: 3em; text-align: right; }

@@ -5,14 +5,17 @@
   const stickMove = { x: 0, y: 0, active: false };
   const stickAim = { x: 0, y: 0, active: false };
   const mouse = { x: C.width / 2, y: C.height / 2, seen: false };
-  let canvas = null;
+  let canvas = null, space = false, mouseDown = false;
 
   addEventListener('keydown', e => {
     if (KEYS[e.code]) { down.add(e.code); e.preventDefault(); }
+    if (e.code === 'Space') { space = true; e.preventDefault(); }
     if ((e.code === 'Escape' || e.code === 'KeyP') && !e.repeat) A.GameState.togglePause();
   });
-  addEventListener('keyup', e => down.delete(e.code));
-  addEventListener('blur', () => { down.clear(); A.GameState.pause(); });
+  addEventListener('keyup', e => { down.delete(e.code); if (e.code === 'Space') space = false; });
+addEventListener('pointerdown', e => { if (e.pointerType === 'mouse' && e.button === 0 && e.target === canvas) mouseDown = true; });
+addEventListener('pointerup', () => { mouseDown = false; });
+  addEventListener('blur', () => { down.clear(); space = false; mouseDown = false; A.GameState.pause(); });
 
   addEventListener('pointermove', e => {
     if (e.pointerType !== 'mouse' || !canvas) return;
@@ -50,6 +53,7 @@
 
   A.Input = {
     mouse, stickAim,
+    get firing() { return space || mouseDown; },
     init(cv) {
       canvas = cv;
       makeStick(document.getElementById('stick-move'), stickMove);

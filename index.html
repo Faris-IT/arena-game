@@ -18,6 +18,8 @@
     <div class="bar energy"><span id="en-fill"></span></div>
   </div>
   <div class="hud-right">
+    <span id="wave"></span>
+    <span id="score">0</span>
     <span id="fps">60</span>
     <button id="btn-pause" type="button" aria-label="Pause">II</button>
   </div>
@@ -32,18 +34,23 @@
   <div class="panel">
     <h1>Mufa Arena</h1>
     <p class="tagline">Enter the Arena. Adapt. Survive.</p>
-    <p class="hint" id="hint-desktop">Gerak: WASD / panah &middot; Bidik: mouse &middot; Pause: Esc / P</p>
-    <p class="hint" id="hint-touch">Joystick kiri untuk gerak, joystick kanan untuk membidik.</p>
-    <button id="btn-main" type="button" class="primary">Mulai latihan gerak</button>
+    <p class="hint" id="hint-desktop">Gerak: WASD / panah &middot; Bidik: mouse &middot; Tembak: klik / Space (otomatis jika musuh searah bidikan) &middot; Pause: Esc / P</p>
+    <p class="hint" id="hint-touch">Joystick kiri untuk gerak. Joystick kanan membidik dan menembak.</p>
+    <p class="summary" id="summary" hidden></p>
+    <button id="btn-main" type="button" class="primary">Mulai pertarungan</button>
   </div>
 </div>
 
 <script src="js/config.js"></script>
 <script src="js/game-state.js"></script>
+<script src="data/enemies.js"></script>
 <script src="js/collision.js"></script>
 <script src="js/input.js"></script>
 <script src="js/player.js"></script>
+<script src="js/projectiles.js"></script>
+<script src="js/enemies.js"></script>
 <script src="js/renderer.js"></script>
+<script src="modes/prototype.js"></script>
 <script src="js/ui.js"></script>
 <script src="js/game-loop.js"></script>
 <script src="js/main.js"></script>

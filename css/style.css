@@ -20,3 +20,5 @@ button.primary { width: 100%; padding: 12px 16px; border-radius: 10px; border: 0
 button.primary:hover { filter: brightness(1.1); }
 button:focus-visible { outline: 2px solid var(--magenta); outline-offset: 2px; }
 @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+.summary { margin: 0 0 18px; color: var(--orange); font-weight: 600; }
+.summary[hidden] { display: none; }

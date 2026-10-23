@@ -7,16 +7,17 @@ Buka `index.html` di browser, atau upload folder ini ke hosting statis (mis. Git
 
 ## Status pengembangan
 - [x] Tahap 1 — Arena dan gerakan
-- [ ] Tahap 2 — Pertarungan dasar
+- [x] Tahap 2 — Pertarungan dasar (mode uji 3 wave)
 - [ ] Tahap 3 — Mode dasar
 - [ ] Tahap 4 — Mode objektif
 - [ ] Tahap 5 — Kemampuan dan tantangan
 - [ ] Tahap 6 — Progres dan UI final
 - [ ] Tahap 7 — Pengujian dan rilis
 
-## Kontrol (Tahap 1)
+## Kontrol
 | Aksi | Desktop | Mobile |
 |---|---|---|
 | Gerak | WASD / panah | Joystick kiri |
 | Bidik | Mouse | Joystick kanan |
+| Tembak | Klik / Space (otomatis jika musuh searah bidikan) | Joystick kanan |
 | Pause | Esc / P | Tombol II |

@@ -2,15 +2,27 @@
   const C = A.CONFIG;
   let last = 0, frames = 0, acc = 0;
 
+  function step(dt) {
+    const s = A.state;
+    s.time += dt;
+    A.Player.update(s.player, dt, s);
+    A.Enemies.update(s, dt);
+    A.Enemies.contact(s);
+    A.Projectiles.update(s, dt);
+    A.Enemies.removeDead(s);
+    const result = s.player.stats.health <= 0 ? 'lose' : s.mode.update(s, dt);
+    if (result) { s.result = result; A.GameState.set('gameover'); }
+  }
+
   function frame(t) {
     requestAnimationFrame(frame);
     // dt dibatasi agar tab yang baru aktif tidak menyebabkan lompatan
     const dt = Math.min((t - last) / 1000, C.maxDt); last = t;
-    const st = A.state;
-    if (A.GameState.status === 'playing') A.Player.update(st.player, dt);
-    A.Renderer.draw(st);
+    if (A.GameState.status === 'playing') step(dt);
+    A.Renderer.draw(A.state);
     frames++; acc += dt;
-    if (acc >= 0.5) { A.UI.updateHud(st.player, Math.round(frames / acc)); frames = 0; acc = 0; }
+    if (acc >= 0.5) { A.UI.updateHud(A.state, Math.round(frames / acc)); frames = 0; acc = 0; }
+    else A.UI.updateHud(A.state);
   }
 
   A.GameLoop = {
