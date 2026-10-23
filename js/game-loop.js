@@ -13,14 +13,17 @@
     A.Items.update(s, dt);
     A.Hazards.update(s, dt);
     A.Enemies.removeDead(s);
+    A.Particles.update(dt);
     if (s.mode.noDeath && s.player.stats.health < 1) s.player.stats.health = 1; // mis. Tutorial
     const result = s.player.stats.health <= 0 ? 'lose' : s.mode.update(s, dt);
+    A.Achievements.tick(s); // achievement dicek dari kejadian gameplay nyata
     if (result && A.GameState.status === 'playing') {
       s.result = result;
       s.newRecord = s.mode.noRecord ? false
         : A.Storage.submitResult(s.mode, { key: s.mode.levels ? s.mode.id + '#' + s.level : s.mode.id,
-            score: s.score, time: s.time, wave: s.wave || 0, kills: s.kills, result });
+            score: s.score, time: s.time, wave: s.wave || 0, kills: s.kills, result, bosses: s.bossKills, abil: s.abilUses });
       if (result === 'win' && s.mode.levels) A.Storage.unlock(s.mode.id, s.level + 2); // buka level berikutnya
+      A.Achievements.onEnd(s, result);
       if (s.mode.onEnd) s.mode.onEnd(s, result);
       A.GameState.set('gameover');
     }

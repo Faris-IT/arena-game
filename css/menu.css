@@ -24,9 +24,27 @@ button.ghost:hover { border-color: var(--cyan); background: rgba(34, 228, 255, .
 .tag.mudah { color: var(--green); } .tag.sedang { color: var(--orange); } .tag.sulit { color: var(--magenta); }
 .note { color: var(--muted); font-size: .82rem; margin-top: 18px; }
 
-#levels, #loadout, #choose { align-items: flex-start; overflow-y: auto; touch-action: pan-y; overscroll-behavior: contain; background: rgba(5, 7, 12, .93); }
+#levels, #loadout, #choose, #ach, #stats, #settings { align-items: flex-start; overflow-y: auto; touch-action: pan-y; overscroll-behavior: contain; background: rgba(5, 7, 12, .93); }
 #choose { align-items: center; background: rgba(5, 7, 12, .86); }
 .chip { margin-left: auto; font-size: .82rem; color: var(--muted); }
 .card.sel { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent) inset; }
 .card:disabled { opacity: .45; cursor: not-allowed; transform: none; box-shadow: none; }
 #level-grid, #loadout-grid, #choose-opts { margin-top: 12px; }
+
+.menu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 10px; }
+.menu-grid[hidden] { display: none; }
+.menu-grid .ghost { margin: 0; }
+.menu-grid .wide { grid-column: 1 / -1; }
+.panel button.ghost.strong { border-color: var(--cyan); color: var(--cyan); }
+.card.static { cursor: default; }
+.card.static:hover { transform: none; box-shadow: none; }
+.card.static.sel { background: rgba(255, 210, 60, .06); }
+.tiles { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 10px; margin-top: 8px; }
+.tile { padding: 12px 14px; border: 1px solid var(--line); border-radius: 12px; background: var(--panel); }
+.tile span { display: block; font-size: .75rem; color: var(--muted); letter-spacing: .04em; text-transform: uppercase; }
+.tile strong { display: block; margin-top: 4px; font-size: 1.3rem; color: var(--cyan); }
+.rows { display: grid; gap: 8px; margin-top: 8px; }
+.row { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 10px 14px; border: 1px solid var(--line); border-radius: 12px; background: var(--panel); font-size: .92rem; }
+.row .val { color: var(--orange); font-size: .85rem; text-align: right; }
+.row button { min-width: 110px; }
+.row.danger button { border-color: #ff5d5d; color: #ff5d5d; }

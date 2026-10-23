@@ -1,7 +1,10 @@
 (function (A) {
   const D = A.AbilityData, TAU = Math.PI * 2, REGEN = 6; // regen energi per detik
 
-  function fx(s, x, y, r0, r1, dur, c) { if (s.fx.length < 24) s.fx.push({ x, y, r0, r1, t: 0, dur, c }); }
+  function fx(s, x, y, r0, r1, dur, c) {
+    if (s.fx.length < 24) s.fx.push({ x, y, r0, r1, t: 0, dur, c });
+    A.Particles.burst(x, y, 'rgb(' + c + ')', Math.round(r1 / 8), r1 * 3, 0.5);
+  }
 
   // Damage ke musuh dari kemampuan (menghitung kill dan skor).
   function hurt(s, e, dmg) {

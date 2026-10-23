@@ -16,6 +16,7 @@
         for (const e of s.enemies) {
           if (e.dead || !A.Collision.circleHit(b, e)) continue;
           e.hp -= b.damage; e.flash = 0.08; e.aggro = true; b.dead = true;
+          A.Particles.burst(b.x, b.y, e.d.color, 3, 120, 0.25);
           if (e.hp <= 0) { e.dead = true; A.Scoring.onKill(s, e); }
           break; // satu proyektil hanya mengenai satu musuh
         }

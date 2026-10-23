@@ -18,6 +18,7 @@
     p.stats.health = Math.max(0, p.stats.health - amount * p.mods.guard);
     p.invuln = C.combat.invuln;
     p.hitCount++;
+    A.Particles.burst(p.x, p.y, '#ff5d5d', 10, 140, 0.4); A.Particles.shakeBy(5);
     return true;
   }
 
@@ -37,6 +38,7 @@
     const m = A.Input.getMove(), spd = p.stats.speed * p.mods.spd * (s.mode.speedMul || 1);
     if (p.dash) { // Dash: kecepatan tetap singkat
       p.vx = p.dash.vx; p.vy = p.dash.vy; p.dash.t -= dt;
+      A.Particles.burst(p.x, p.y, '#22e4ff', 2, 40, 0.3);
       if (p.dash.t <= 0) p.dash = null;
     } else { // Percepatan halus yang tidak bergantung frame rate
       const k = 1 - Math.exp(-P.accel * dt);

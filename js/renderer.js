@@ -3,7 +3,9 @@
   let canvas, ctx, shapes = null, lastT = 0;
 
   function resize() {
-    const s = Math.min(innerWidth / C.width, innerHeight / C.height);
+    // Ruang di bawah arena (dock tutorial/kemampuan) tidak dipakai canvas agar pandangan tidak terhalang.
+    const dock = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--dock')) || 0;
+    const s = Math.max(0.2, Math.min(innerWidth / C.width, (innerHeight - dock) / C.height));
     const dpr = Math.min(window.devicePixelRatio || 1, 2);
     canvas.style.width = C.width * s + 'px';
     canvas.style.height = C.height * s + 'px';
@@ -86,10 +88,13 @@
   }
 
   A.Renderer = {
+    resize,
     init(cv) { canvas = cv; ctx = cv.getContext('2d'); resize(); addEventListener('resize', resize); },
     draw(s) {
       drawArena();
       if (A.GameState.status === 'menu') { menuBg(); return; }
+      const shaking = A.Particles.shake > 0.1; // goyang layar singkat
+      if (shaking) { ctx.save(); ctx.translate((Math.random() - 0.5) * A.Particles.shake, (Math.random() - 0.5) * A.Particles.shake); }
       if (s.mode.drawBelow) s.mode.drawBelow(ctx, s);
       A.Hazards.draw(ctx, s);
       A.Abilities.drawBelow(ctx, s);
@@ -108,9 +113,11 @@
       }
       s.enemies.forEach(drawEnemy);
       for (const b of s.projectiles) { ctx.fillStyle = b.color; ctx.beginPath(); ctx.arc(b.x, b.y, b.r, 0, TAU); ctx.fill(); }
+      A.Particles.draw(ctx);
       drawPlayer(s.player);
       A.Abilities.drawAbove(ctx, s);
       if (s.mode.drawAbove) s.mode.drawAbove(ctx, s);
+      if (shaking) ctx.restore();
     }
   };
 })(window.Arena);

@@ -26,16 +26,19 @@
   </div>
 </div>
 
-<div id="coach" hidden>
-  <div class="coach-top"><span id="coach-step"></span><button id="coach-skip" type="button" class="ghost">Lewati tutorial</button></div>
-  <strong id="coach-title"></strong>
-  <p id="coach-text"></p>
-  <div class="coach-track"><span id="coach-bar"></span></div>
-</div>
-
-<div id="abil" hidden>
-  <button class="abtn" type="button" hidden><svg viewBox="0 0 24 24" class="ico"><path d=""/></svg><span class="key"></span><i class="cd"></i></button>
-  <button class="abtn" type="button" hidden><svg viewBox="0 0 24 24" class="ico"><path d=""/></svg><span class="key"></span><i class="cd"></i></button>
+<!-- Dock: tutorial, tombol kemampuan, dan notifikasi berada DI LUAR canvas agar pandangan tidak terhalang. -->
+<div id="dock" class="empty">
+  <div id="toast" hidden></div>
+  <div id="coach" hidden>
+    <div class="coach-top"><span id="coach-step"></span><button id="coach-skip" type="button" class="ghost">Lewati tutorial</button></div>
+    <strong id="coach-title"></strong>
+    <p id="coach-text"></p>
+    <div class="coach-row"><div class="coach-track"><span id="coach-bar"></span></div><button id="coach-next" type="button" class="primary small" hidden>Lanjut</button></div>
+  </div>
+  <div id="abil" hidden>
+    <button class="abtn" type="button" hidden><svg viewBox="0 0 24 24" class="ico"><path d=""/></svg><span class="nm"></span><span class="key"></span><i class="cd"></i></button>
+    <button class="abtn" type="button" hidden><svg viewBox="0 0 24 24" class="ico"><path d=""/></svg><span class="nm"></span><span class="key"></span><i class="cd"></i></button>
+  </div>
 </div>
 
 <div id="touch" hidden>
@@ -50,12 +53,18 @@
     <p class="tagline" id="tagline">Enter the Arena. Adapt. Survive.</p>
     <p class="summary" id="summary" hidden></p>
     <button id="btn-main" type="button" class="primary">Pilih mode</button>
+    <button id="btn-continue" type="button" class="ghost strong" hidden>Lanjutkan</button>
     <button id="btn-retry" type="button" class="ghost" hidden>Ulangi level</button>
-    <button id="btn-abil" type="button" class="ghost">Kemampuan</button>
-    <button id="btn-tutorial" type="button" class="ghost">Cara bermain (tutorial)</button>
+    <div id="menu-grid" class="menu-grid">
+      <button id="btn-abil" type="button" class="ghost">Kemampuan</button>
+      <button id="btn-ach" type="button" class="ghost">Pencapaian</button>
+      <button id="btn-stats" type="button" class="ghost">Statistik</button>
+      <button id="btn-settings" type="button" class="ghost">Pengaturan</button>
+      <button id="btn-tutorial" type="button" class="ghost wide">Cara bermain (tutorial)</button>
+    </div>
     <button id="btn-menu" type="button" class="ghost" hidden>Menu utama</button>
     <p class="hint" id="hint-desktop">WASD / panah: gerak &middot; Mouse: bidik &middot; Klik / Space: tembak &middot; Shift / Q: kemampuan &middot; Esc / P: jeda</p>
-    <p class="hint" id="hint-touch">Joystick kiri: gerak &middot; Joystick kanan: bidik dan tembak &middot; Tombol bulat: kemampuan</p>
+    <p class="hint" id="hint-touch">Joystick kiri: gerak &middot; Joystick kanan: bidik dan tembak &middot; Tombol di bawah arena: kemampuan</p>
   </div>
 </div>
 
@@ -76,8 +85,31 @@
 <div id="loadout" class="overlay" hidden>
   <div class="modes-wrap">
     <header><button id="btn-loadout-back" type="button" class="ghost">&larr; Kembali</button><h2>Kemampuan</h2></header>
-    <p class="note">Pilih sampai 2 kemampuan. Slot 1: Shift, slot 2: Q atau E (di HP, tombol bulat). Beberapa mode membatasi atau menentukan kemampuan sendiri.</p>
+    <p class="note">Pilih sampai 2 kemampuan. Slot 1: Shift, slot 2: Q atau E (di HP, tombol di bawah arena). Beberapa mode membatasi atau menentukan kemampuan sendiri.</p>
     <div id="loadout-grid" class="cards"></div>
+  </div>
+</div>
+
+<div id="ach" class="overlay" hidden>
+  <div class="modes-wrap">
+    <header><button class="ghost back-menu" type="button">&larr; Kembali</button><h2 id="ach-title">Pencapaian</h2></header>
+    <div id="ach-grid" class="cards"></div>
+  </div>
+</div>
+
+<div id="stats" class="overlay" hidden>
+  <div class="modes-wrap">
+    <header><button class="ghost back-menu" type="button">&larr; Kembali</button><h2>Statistik</h2></header>
+    <div id="stats-tiles" class="tiles"></div>
+    <h3 class="group">Skor tertinggi per mode</h3>
+    <div id="stats-modes" class="rows"></div>
+  </div>
+</div>
+
+<div id="settings" class="overlay" hidden>
+  <div class="modes-wrap">
+    <header><button class="ghost back-menu" type="button">&larr; Kembali</button><h2>Pengaturan</h2></header>
+    <div id="settings-rows" class="rows"></div>
   </div>
 </div>
 
@@ -96,14 +128,18 @@
 <script src="js/game-state.js"></script>
 <script src="js/collision.js"></script>
 <script src="js/storage.js"></script>
+<script src="js/particles.js"></script>
+<script src="js/achievements.js"></script>
 <script src="js/scoring.js"></script>
 <script src="js/input.js"></script>
 <script src="js/items.js"></script>
 <script src="js/projectiles.js"></script>
 <script src="js/player.js"></script>
+<script src="js/upgrades.js"></script>
 <script src="js/abilities.js"></script>
 <script src="js/hazards.js"></script>
 <script src="js/enemies.js"></script>
+<script src="data/bosses.js"></script>
 <script src="js/renderer.js"></script>
 <script src="modes/common.js"></script>
 <script src="modes/tutorial.js"></script>
