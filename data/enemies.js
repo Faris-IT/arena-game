@@ -6,5 +6,7 @@ Arena.EnemyData = {
              keep: 230, fireRate: 1.5, projSpeed: 240, projDamage: 8 },
   tank:    { sides: 6, r: 22, speed: 55,  hp: 90, damage: 18, score: 40, color: '#b36bff' },
   dasher:  { sides: 3, r: 12, speed: 95,  hp: 22, damage: 14, score: 25, color: '#ffd23c',
-             dashSpeed: 560, windup: 0.6, dashTime: 0.35, cooldown: 1.8 }
+             dashSpeed: 560, windup: 0.6, dashTime: 0.35, cooldown: 1.8 },
+  // Target bernilai tinggi (Time Attack): kabur dari pemain, tidak menyerang, menghilang jika dibiarkan.
+  target:  { sides: 5, r: 11, speed: 150, hp: 15, damage: 0, score: 50, color: '#fff27a', life: 7 }
 };

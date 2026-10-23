@@ -10,12 +10,13 @@
     const list = s.projectiles;
     for (const b of list) {
       b.x += b.vx * dt; b.y += b.vy * dt; b.life -= dt;
+      if (A.Collision.inRects(b.x, b.y, b.r, s.obstacles)) { b.dead = true; continue; }
       if (b.life <= 0 || b.x < C.wall || b.x > C.width - C.wall || b.y < C.wall || b.y > C.height - C.wall) { b.dead = true; continue; }
       if (b.from === 'player') {
         for (const e of s.enemies) {
           if (e.dead || !A.Collision.circleHit(b, e)) continue;
-          e.hp -= b.damage; e.flash = 0.08; b.dead = true;
-          if (e.hp <= 0) { e.dead = true; s.kills++; s.score += e.d.score; }
+          e.hp -= b.damage; e.flash = 0.08; e.aggro = true; b.dead = true;
+          if (e.hp <= 0) { e.dead = true; A.Scoring.onKill(s, e); }
           break; // satu proyektil hanya mengenai satu musuh
         }
       } else if (A.Collision.circleHit(b, s.player)) {

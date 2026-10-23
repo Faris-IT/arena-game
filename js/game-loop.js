@@ -9,9 +9,14 @@
     A.Enemies.update(s, dt);
     A.Enemies.contact(s);
     A.Projectiles.update(s, dt);
+    A.Items.update(s, dt);
     A.Enemies.removeDead(s);
     const result = s.player.stats.health <= 0 ? 'lose' : s.mode.update(s, dt);
-    if (result) { s.result = result; A.GameState.set('gameover'); }
+    if (result) {
+      s.result = result;
+      s.newRecord = A.Storage.submitResult(s.mode, { score: s.score, time: s.time, wave: s.wave || 0, kills: s.kills, result });
+      A.GameState.set('gameover');
+    }
   }
 
   function frame(t) {

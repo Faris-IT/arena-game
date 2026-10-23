@@ -1,6 +1,5 @@
 (function (A) {
   const C = A.CONFIG;
-  // Menjaga lingkaran tetap di dalam arena. Mengembalikan sisi yang disentuh.
   function clampToArena(e) {
     const min = C.wall + e.r, hit = { x: false, y: false };
     const maxX = C.width - min, maxY = C.height - min;
@@ -12,5 +11,29 @@
     const dx = a.x - b.x, dy = a.y - b.y, r = a.r + b.r;
     return dx * dx + dy * dy < r * r;
   }
-  A.Collision = { clampToArena, circleHit };
+  // Mendorong lingkaran keluar dari penghalang padat. Mengembalikan normal tabrakan terakhir atau null.
+  function pushOut(e, rects) {
+    let hit = null;
+    for (const o of rects) {
+      const cx = Math.max(o.x, Math.min(e.x, o.x + o.w)), cy = Math.max(o.y, Math.min(e.y, o.y + o.h));
+      const dx = e.x - cx, dy = e.y - cy, d2 = dx * dx + dy * dy;
+      if (d2 >= e.r * e.r) continue;
+      if (d2 > 0.0001) {
+        const d = Math.sqrt(d2); hit = { x: dx / d, y: dy / d };
+        e.x = cx + hit.x * e.r; e.y = cy + hit.y * e.r;
+      } else { // pusat berada di dalam penghalang
+        const l = e.x - o.x, r = o.x + o.w - e.x, t = e.y - o.y, b = o.y + o.h - e.y, m = Math.min(l, r, t, b);
+        if (m === l) { e.x = o.x - e.r; hit = { x: -1, y: 0 }; }
+        else if (m === r) { e.x = o.x + o.w + e.r; hit = { x: 1, y: 0 }; }
+        else if (m === t) { e.y = o.y - e.r; hit = { x: 0, y: -1 }; }
+        else { e.y = o.y + o.h + e.r; hit = { x: 0, y: 1 }; }
+      }
+    }
+    return hit;
+  }
+  function inRects(x, y, r, rects) {
+    for (const o of rects) if (x > o.x - r && x < o.x + o.w + r && y > o.y - r && y < o.y + o.h + r) return true;
+    return false;
+  }
+  A.Collision = { clampToArena, circleHit, pushOut, inRects };
 })(window.Arena);

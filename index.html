@@ -6,6 +6,7 @@
 <title>Mufa Arena</title>
 <link rel="stylesheet" href="css/themes.css">
 <link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/menu.css">
 <link rel="stylesheet" href="css/hud.css">
 <link rel="stylesheet" href="css/mobile.css">
 </head>
@@ -33,24 +34,40 @@
 <div id="overlay" class="overlay">
   <div class="panel">
     <h1>Mufa Arena</h1>
-    <p class="tagline">Enter the Arena. Adapt. Survive.</p>
+    <p class="tagline" id="tagline">Enter the Arena. Adapt. Survive.</p>
     <p class="hint" id="hint-desktop">Gerak: WASD / panah &middot; Bidik: mouse &middot; Tembak: klik / Space (otomatis jika musuh searah bidikan) &middot; Pause: Esc / P</p>
     <p class="hint" id="hint-touch">Joystick kiri untuk gerak. Joystick kanan membidik dan menembak.</p>
     <p class="summary" id="summary" hidden></p>
-    <button id="btn-main" type="button" class="primary">Mulai pertarungan</button>
+    <button id="btn-main" type="button" class="primary">Pilih mode</button>
+    <button id="btn-menu" type="button" class="ghost" hidden>Menu utama</button>
+  </div>
+</div>
+
+<div id="modes" class="overlay" hidden>
+  <div class="modes-wrap">
+    <header><button id="btn-back" type="button" class="ghost">Kembali</button><h2>Pilih mode</h2></header>
+    <div id="mode-grid"></div>
+    <p class="note">8 mode lainnya dibuka di Tahap 4 dan 5.</p>
   </div>
 </div>
 
 <script src="js/config.js"></script>
-<script src="js/game-state.js"></script>
 <script src="data/enemies.js"></script>
+<script src="js/game-state.js"></script>
 <script src="js/collision.js"></script>
+<script src="js/storage.js"></script>
+<script src="js/scoring.js"></script>
 <script src="js/input.js"></script>
-<script src="js/player.js"></script>
+<script src="js/items.js"></script>
 <script src="js/projectiles.js"></script>
+<script src="js/player.js"></script>
 <script src="js/enemies.js"></script>
 <script src="js/renderer.js"></script>
-<script src="modes/prototype.js"></script>
+<script src="modes/common.js"></script>
+<script src="modes/classic.js"></script>
+<script src="modes/time-attack.js"></script>
+<script src="modes/survival.js"></script>
+<script src="modes/crystal-hunt.js"></script>
 <script src="js/ui.js"></script>
 <script src="js/game-loop.js"></script>
 <script src="js/main.js"></script>

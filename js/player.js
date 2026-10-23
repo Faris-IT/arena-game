@@ -40,6 +40,8 @@
     const hit = A.Collision.clampToArena(p);
     if (hit.x) p.vx = 0;
     if (hit.y) p.vy = 0;
+    const ob = A.Collision.pushOut(p, s.obstacles);
+    if (ob) { const vn = p.vx * ob.x + p.vy * ob.y; if (vn < 0) { p.vx -= vn * ob.x; p.vy -= vn * ob.y; } }
 
     // Arah bidik: joystick bidik > mouse > arah gerak (sentuh)
     const st = A.Input.stickAim, mo = A.Input.mouse;

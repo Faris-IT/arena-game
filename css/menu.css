@@ -1,0 +1,18 @@
+#modes { align-items: flex-start; overflow-y: auto; }
+.modes-wrap { width: min(920px, 100%); margin: auto; padding: 8px 0 24px; }
+.modes-wrap header { display: flex; align-items: center; gap: 14px; margin-bottom: 16px; }
+.modes-wrap h2 { margin: 0; font-size: 1.4rem; color: var(--cyan); }
+button.ghost { padding: 9px 14px; border-radius: 10px; border: 1px solid var(--line); background: transparent; color: var(--text); }
+button.ghost:hover { border-color: var(--cyan); }
+.panel button.ghost { width: 100%; margin-top: 10px; }
+#mode-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 12px; }
+.card { text-align: left; color: var(--text); background: var(--panel); border: 1px solid var(--line);
+  border-radius: 12px; padding: 14px 16px; }
+.card:hover, .card:focus-visible { border-color: var(--cyan); }
+.card-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+.card p { margin: 0 0 6px; font-size: .9rem; line-height: 1.45; }
+.card .rules { color: var(--muted); font-size: .82rem; }
+.card .rec { color: var(--orange); font-size: .82rem; margin: 8px 0 0; }
+.tag { font-size: .72rem; padding: 2px 8px; border-radius: 99px; border: 1px solid currentColor; }
+.tag.mudah { color: var(--green); } .tag.sedang { color: var(--orange); } .tag.sulit { color: var(--magenta); }
+.note { color: var(--muted); font-size: .85rem; margin-top: 14px; }
