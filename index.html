@@ -33,6 +33,11 @@
   <div class="coach-track"><span id="coach-bar"></span></div>
 </div>
 
+<div id="abil" hidden>
+  <button class="abtn" type="button" hidden><svg viewBox="0 0 24 24" class="ico"><path d=""/></svg><span class="key"></span><i class="cd"></i></button>
+  <button class="abtn" type="button" hidden><svg viewBox="0 0 24 24" class="ico"><path d=""/></svg><span class="key"></span><i class="cd"></i></button>
+</div>
+
 <div id="touch" hidden>
   <div class="stick" id="stick-move"><div class="knob"></div></div>
   <div class="stick" id="stick-aim"><div class="knob"></div></div>
@@ -45,23 +50,49 @@
     <p class="tagline" id="tagline">Enter the Arena. Adapt. Survive.</p>
     <p class="summary" id="summary" hidden></p>
     <button id="btn-main" type="button" class="primary">Pilih mode</button>
+    <button id="btn-retry" type="button" class="ghost" hidden>Ulangi level</button>
+    <button id="btn-abil" type="button" class="ghost">Kemampuan</button>
     <button id="btn-tutorial" type="button" class="ghost">Cara bermain (tutorial)</button>
     <button id="btn-menu" type="button" class="ghost" hidden>Menu utama</button>
-    <p class="hint" id="hint-desktop">WASD / panah: gerak &middot; Mouse: bidik &middot; Klik / Space: tembak &middot; Esc / P: jeda</p>
-    <p class="hint" id="hint-touch">Joystick kiri: gerak &middot; Joystick kanan: bidik dan tembak</p>
+    <p class="hint" id="hint-desktop">WASD / panah: gerak &middot; Mouse: bidik &middot; Klik / Space: tembak &middot; Shift / Q: kemampuan &middot; Esc / P: jeda</p>
+    <p class="hint" id="hint-touch">Joystick kiri: gerak &middot; Joystick kanan: bidik dan tembak &middot; Tombol bulat: kemampuan</p>
   </div>
 </div>
 
 <div id="modes" class="overlay" hidden>
   <div class="modes-wrap">
-    <header><button id="btn-back" type="button" class="ghost">&larr; Kembali</button><h2>Pilih mode</h2></header>
+    <header><button id="btn-back" type="button" class="ghost">&larr; Kembali</button><h2>Pilih mode</h2><button id="btn-abil2" type="button" class="ghost chip"></button></header>
     <div id="mode-grid"></div>
-    <p class="note">4 mode lainnya (Boss Rush, Build &amp; Survive, Hazard Lab, Tactical Trials) dibuka di Tahap 5.</p>
+  </div>
+</div>
+
+<div id="levels" class="overlay" hidden>
+  <div class="modes-wrap">
+    <header><button id="btn-levels-back" type="button" class="ghost">&larr; Mode</button><h2 id="levels-title"></h2></header>
+    <div id="level-grid" class="cards"></div>
+  </div>
+</div>
+
+<div id="loadout" class="overlay" hidden>
+  <div class="modes-wrap">
+    <header><button id="btn-loadout-back" type="button" class="ghost">&larr; Kembali</button><h2>Kemampuan</h2></header>
+    <p class="note">Pilih sampai 2 kemampuan. Slot 1: Shift, slot 2: Q atau E (di HP, tombol bulat). Beberapa mode membatasi atau menentukan kemampuan sendiri.</p>
+    <div id="loadout-grid" class="cards"></div>
+  </div>
+</div>
+
+<div id="choose" class="overlay" hidden>
+  <div class="modes-wrap">
+    <header><h2 id="choose-title"></h2></header>
+    <p class="note" id="choose-text"></p>
+    <div id="choose-opts" class="cards"></div>
   </div>
 </div>
 
 <script src="js/config.js"></script>
 <script src="data/enemies.js"></script>
+<script src="data/abilities.js"></script>
+<script src="data/trials.js"></script>
 <script src="js/game-state.js"></script>
 <script src="js/collision.js"></script>
 <script src="js/storage.js"></script>
@@ -70,6 +101,8 @@
 <script src="js/items.js"></script>
 <script src="js/projectiles.js"></script>
 <script src="js/player.js"></script>
+<script src="js/abilities.js"></script>
+<script src="js/hazards.js"></script>
 <script src="js/enemies.js"></script>
 <script src="js/renderer.js"></script>
 <script src="modes/common.js"></script>
@@ -82,6 +115,10 @@
 <script src="modes/core-escort.js"></script>
 <script src="modes/shadow-run.js"></script>
 <script src="modes/closing-ring.js"></script>
+<script src="modes/boss-rush.js"></script>
+<script src="modes/build-survive.js"></script>
+<script src="modes/hazard-lab.js"></script>
+<script src="modes/tactical-trials.js"></script>
 <script src="js/ui.js"></script>
 <script src="js/game-loop.js"></script>
 <script src="js/main.js"></script>

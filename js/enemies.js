@@ -26,6 +26,7 @@
   function update(s, dt) {
     const list = s.enemies, p = s.player;
     for (const e of list) {
+      if (e.dead) continue;
       const tg = (e.tgt && e.tgt.hp > 0) ? e.tgt : p; // sebagian musuh menyerang inti (Core Escort)
       const d = e.d, dx = tg.x - e.x, dy = tg.y - e.y, dist = Math.hypot(dx, dy) || 1, nx = dx / dist, ny = dy / dist;
       if (e.flash > 0) e.flash -= dt;
@@ -65,12 +66,15 @@
         const l = Math.hypot(mx, my) || 1;
         const sp = d.speed * (dist < 220 ? 1 : 0.5);
         e.vx = mx / l * sp; e.vy = my / l * sp;
+      } else if (d.ai) { // boss: perilaku khusus
+        d.ai(e, s, dt, nx, ny, dist);
       } else { // chaser, tank
         e.vx = nx * d.speed; e.vy = ny * d.speed;
       }
 
       if (e.slide > 0 && e.type !== 'dasher') { e.slide -= dt; e.vx = e.sx * d.speed; e.vy = e.sy * d.speed; }
-      e.x += e.vx * dt; e.y += e.vy * dt;
+      const sm = A.Abilities.slowMul(s, e); // Slow Field
+      e.x += e.vx * dt * sm; e.y += e.vy * dt * sm;
       A.Collision.clampToArena(e);
       const h = A.Collision.pushOut(e, s.obstacles);
       if (h) { e.slide = 0.35; e.sx = -h.y * e.side; e.sy = h.x * e.side; } // menyusuri penghalang

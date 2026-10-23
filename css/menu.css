@@ -23,3 +23,10 @@ button.ghost:hover { border-color: var(--cyan); background: rgba(34, 228, 255, .
 .tag { font-size: .7rem; padding: 2px 9px; border-radius: 99px; border: 1px solid currentColor; }
 .tag.mudah { color: var(--green); } .tag.sedang { color: var(--orange); } .tag.sulit { color: var(--magenta); }
 .note { color: var(--muted); font-size: .82rem; margin-top: 18px; }
+
+#levels, #loadout, #choose { align-items: flex-start; overflow-y: auto; touch-action: pan-y; overscroll-behavior: contain; background: rgba(5, 7, 12, .93); }
+#choose { align-items: center; background: rgba(5, 7, 12, .86); }
+.chip { margin-left: auto; font-size: .82rem; color: var(--muted); }
+.card.sel { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent) inset; }
+.card:disabled { opacity: .45; cursor: not-allowed; transform: none; box-shadow: none; }
+#level-grid, #loadout-grid, #choose-opts { margin-top: 12px; }

@@ -2,6 +2,7 @@
   const C = A.CONFIG;
   const KEYS = { KeyW:[0,-1], ArrowUp:[0,-1], KeyS:[0,1], ArrowDown:[0,1], KeyA:[-1,0], ArrowLeft:[-1,0], KeyD:[1,0], ArrowRight:[1,0] };
   const down = new Set();
+  const abil = []; // antrean penekanan tombol kemampuan (slot 0/1)
   const stickMove = { x: 0, y: 0, active: false };
   const stickAim = { x: 0, y: 0, active: false };
   const mouse = { x: C.width / 2, y: C.height / 2, seen: false };
@@ -10,6 +11,10 @@
   addEventListener('keydown', e => {
     if (KEYS[e.code]) { down.add(e.code); e.preventDefault(); }
     if (e.code === 'Space') { space = true; e.preventDefault(); }
+    if (!e.repeat && A.GameState.status === 'playing') {
+      if (e.code === 'ShiftLeft' || e.code === 'ShiftRight') abil.push(0);
+      else if (e.code === 'KeyQ' || e.code === 'KeyE') abil.push(1);
+    }
     if ((e.code === 'Escape' || e.code === 'KeyP') && !e.repeat) A.GameState.togglePause();
   });
   addEventListener('keyup', e => { down.delete(e.code); if (e.code === 'Space') space = false; });
@@ -54,6 +59,8 @@ addEventListener('pointerup', () => { mouseDown = false; });
   A.Input = {
     mouse, stickAim,
     get firing() { return space || mouseDown; },
+    takeAbilities() { const q = abil.slice(); abil.length = 0; return q; },
+    pushAbility(i) { if (A.GameState.status === 'playing') abil.push(i); },
     init(cv) {
       canvas = cv;
       makeStick(document.getElementById('stick-move'), stickMove);

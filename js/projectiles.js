@@ -21,7 +21,10 @@
         }
       } else {
         if (s.core && s.core.hp > 0 && A.Collision.circleHit(b, s.core)) { s.core.hp -= b.damage; s.core.flash = 0.15; b.dead = true; continue; }
-        if (A.Collision.circleHit(b, s.player) && A.Player.damage(s.player, b.damage)) b.dead = true;
+        if (A.Collision.circleHit(b, s.player)) {
+          if (s.player.shieldT > 0) { b.dead = true; continue; } // Shield menyerap proyektil
+          if (A.Player.damage(s.player, b.damage)) b.dead = true;
+        }
       }
     }
     let n = 0;

@@ -22,6 +22,10 @@
       t: 'Sentuh item hijau untuk memulihkan health. Item punya batas waktu pada mode asli.',
       enter(s) { s.player.stats.health = Math.min(s.player.stats.health, 40); A.Items.spawnHeal(s, 60, 9999); },
       prog: s => (s.items.length === 0 ? 1 : 0), done: s => s.items.length === 0 },
+    { title: 'Kemampuan khusus',
+      d: 'Tekan Shift untuk Dash atau Q untuk Pulse. Kemampuan memakai energi (bar cyan) dan punya cooldown. Coba pakai salah satunya.',
+      t: 'Ketuk tombol kemampuan di dekat joystick kanan. Kemampuan memakai energi (bar cyan) dan punya cooldown.',
+      prog: s => (s.abilCount >= 1 ? 1 : 0), done: s => s.abilCount >= 1 },
     { title: 'Jeda permainan',
       d: 'Tekan Esc atau P untuk menjeda, lalu pilih Lanjutkan.',
       t: 'Tekan tombol II di kanan atas untuk menjeda, lalu pilih Lanjutkan.',
@@ -31,8 +35,8 @@
   function enter(s) { const st = STEPS[s.tut.i]; if (st && st.enter) st.enter(s); }
 
   U.register({
-    id: 'tutorial', name: 'Tutorial', difficulty: 'Mudah', noRecord: true, noDeath: true, retryLabel: 'Ulangi tutorial',
-    objective: 'Pelajari gerak, bidik, tembak, dan item dalam 5 langkah singkat.',
+    id: 'tutorial', name: 'Tutorial', difficulty: 'Mudah', noRecord: true, noDeath: true, retryLabel: 'Ulangi tutorial', forcedAbilities: ['dash', 'pulse'],
+    objective: 'Pelajari gerak, bidik, tembak, dan item dalam 6 langkah singkat.',
     rules: 'Tanpa risiko kalah. Bisa diulang kapan saja.',
     start(s) {
       s.tut = { i: 0, moved: 0, lx: s.player.x, ly: s.player.y, pauseBase: A.GameState.pauseCount, endT: 0 };

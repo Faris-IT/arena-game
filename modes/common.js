@@ -12,7 +12,11 @@
     'zone-control': { group: 'Mode objektif', color: '#4dff9a', icon: 'M4 4h16v16H4z M9 9h6v6H9z' },
     'core-escort':  { group: 'Mode objektif', color: '#ffd23c', icon: 'M12 3l7 3v6c0 4-3 7-7 9-4-2-7-5-7-9V6z M12 9v6 M9 12h6' },
     'shadow-run':   { group: 'Mode objektif', color: '#b36bff', icon: 'M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z M12 9.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5' },
-    'closing-ring': { group: 'Mode objektif', color: '#ff5d5d', icon: 'M12 3a9 9 0 1 0 0 18a9 9 0 1 0 0-18 M12 8a4 4 0 1 0 0 8 4 4 0 0 0 0-8' }
+    'closing-ring': { group: 'Mode objektif', color: '#ff5d5d', icon: 'M12 3a9 9 0 1 0 0 18a9 9 0 1 0 0-18 M12 8a4 4 0 1 0 0 8 4 4 0 0 0 0-8' },
+    'boss-rush':      { group: 'Mode tantangan', color: '#ff3d6e', icon: 'M3 18l2-10 5 5 2-7 2 7 5-5 2 10z' },
+    'build-survive':  { group: 'Mode tantangan', color: '#ffd23c', icon: 'M12 8a4 4 0 1 0 0 8 4 4 0 0 0 0-8 M12 2v3 M12 19v3 M2 12h3 M19 12h3' },
+    'hazard-lab':     { group: 'Mode tantangan', color: '#ff9a3c', icon: 'M12 3l10 18H2z M12 10v5 M12 18v.5' },
+    'tactical-trials':{ group: 'Mode tantangan', color: '#b36bff', icon: 'M5 4h14v6a7 7 0 0 1-14 0z M12 17v4 M8 21h8' }
   };
   A.Util = {
     META,

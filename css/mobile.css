@@ -10,3 +10,7 @@ body.touch #hint-touch { display: block; }
   border-radius: 50%; background: rgba(34,228,255,.55); pointer-events: none; }
 #stick-aim .knob { background: rgba(255,61,242,.55); }
 @media (max-height: 420px) { .stick { width: 112px; height: 112px; } .knob { width: 48px; height: 48px; margin: -24px 0 0 -24px; } }
+
+body.touch #abil { left: auto; right: calc(max(18px, env(safe-area-inset-right)) + 150px); bottom: 34px; transform: none; flex-direction: column-reverse; gap: 10px; }
+body.touch .abtn .key { display: none; }
+@media (max-height: 420px) { body.touch #abil { right: calc(max(18px, env(safe-area-inset-right)) + 130px); bottom: 20px; } .abtn { width: 50px; height: 50px; } }

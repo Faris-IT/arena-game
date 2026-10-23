@@ -1,7 +1,7 @@
 (function (A) {
   const C = A.CONFIG;
   function spawnHeal(s, value, life, px, py) {
-    if (s.items.length >= 3) return;
+    if (s.items.length >= 3 || s.mode.noHeal || s.rules.noHeal) return;
     let x = px, y = py;
     if (px == null) for (let i = 0; i < 12; i++) {
       x = 60 + Math.random() * (C.width - 120); y = 60 + Math.random() * (C.height - 120);

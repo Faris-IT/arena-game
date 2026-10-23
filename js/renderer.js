@@ -91,8 +91,13 @@
       drawArena();
       if (A.GameState.status === 'menu') { menuBg(); return; }
       if (s.mode.drawBelow) s.mode.drawBelow(ctx, s);
+      A.Hazards.draw(ctx, s);
+      A.Abilities.drawBelow(ctx, s);
       ctx.fillStyle = '#121a29'; ctx.strokeStyle = 'rgba(34,228,255,.55)'; ctx.lineWidth = 2;
-      for (const o of s.obstacles) { ctx.fillRect(o.x, o.y, o.w, o.h); ctx.strokeRect(o.x, o.y, o.w, o.h); }
+      for (const o of s.obstacles) {
+        ctx.fillStyle = o.door ? '#3a1840' : '#121a29'; ctx.strokeStyle = o.door ? 'rgba(255,61,242,.85)' : 'rgba(34,228,255,.55)';
+        ctx.fillRect(o.x, o.y, o.w, o.h); ctx.strokeRect(o.x, o.y, o.w, o.h);
+      }
       const pulse = 1 + Math.sin(performance.now() / 220) * 0.12;
       for (const c of s.crystals) if (!c.taken) { ctx.fillStyle = '#6ff7ff'; polygon(c.x, c.y, 11 * pulse, 4, 0); ctx.fill(); }
       for (const it of s.items) {
@@ -104,6 +109,7 @@
       s.enemies.forEach(drawEnemy);
       for (const b of s.projectiles) { ctx.fillStyle = b.color; ctx.beginPath(); ctx.arc(b.x, b.y, b.r, 0, TAU); ctx.fill(); }
       drawPlayer(s.player);
+      A.Abilities.drawAbove(ctx, s);
       if (s.mode.drawAbove) s.mode.drawAbove(ctx, s);
     }
   };
