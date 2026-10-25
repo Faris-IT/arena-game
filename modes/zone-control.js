@@ -8,9 +8,9 @@
       zones: [[210, 150], [750, 150], [480, 455]], obst: [] },
     { name: 'Terhalang', desc: 'Tembok membelah arena.', r: 60, cap: 4, grace: 15, hold: 20, limit: 180, spawn: 1,
       zones: [[170, 120], [790, 120], [480, 480]], obst: [[300, 200, 24, 200], [636, 200, 24, 200], [420, 60, 120, 24]] },
-    { name: 'Zona sempit', desc: 'Zona kecil, zona cepat kembali netral.', r: 48, cap: 4, grace: 12, hold: 25, limit: 200, spawn: 1.2,
+    { name: 'Zona sempit', desc: 'Zona kecil, zona cepat kembali netral.', r: 48, cap: 4, grace: 16, hold: 25, limit: 200, spawn: 1.2,
       zones: [[130, 300], [830, 300], [480, 110]], obst: [[300, 100, 24, 150], [636, 350, 24, 150], [420, 420, 120, 24]] },
-    { name: 'Penguasa arena', desc: 'Zona kecil, tahan lama, musuh agresif.', r: 44, cap: 5, grace: 10, hold: 30, limit: 220, spawn: 1.5,
+    { name: 'Penguasa arena', desc: 'Zona kecil, tahan lama, musuh sangat agresif.', r: 44, cap: 4, grace: 16, hold: 30, limit: 220, spawn: 1.8,
       zones: [[150, 130], [810, 130], [480, 480]], obst: [[250, 250, 140, 24], [570, 250, 140, 24], [466, 330, 24, 100]] }
   ];
 

@@ -1,0 +1,17 @@
+{
+  "name": "arena-game",
+  "version": "1.0.0",
+  "description": "Mufa Arena: game arena arcade-survival di browser. HTML5 Canvas + JavaScript murni, tanpa library.",
+  "private": true,
+  "license": "MIT",
+  "author": "Muhammad Faris (Faris-IT)",
+  "homepage": "https://faris-it.github.io/arena-game/",
+  "repository": { "type": "git", "url": "git+https://github.com/Faris-IT/arena-game.git" },
+  "scripts": {
+    "start": "python3 -m http.server 8080",
+    "test": "node tests/run.js",
+    "screenshots": "node tools/render-screenshots.js && python3 tools/rasterize.py",
+    "banner": "python3 tools/make-banner.py"
+  },
+  "engines": { "node": ">=18" }
+}

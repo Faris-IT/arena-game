@@ -66,9 +66,11 @@
     if (p.invuln > 0) p.invuln -= dt;
     const noShoot = s.mode.noShoot || s.rules.noShoot;
     if (p.fireCd <= 0 && !noShoot && (A.Input.firing || st.active || hasTarget(p, s.enemies))) {
+      // Peluru utama selalu tepat di garis bidik; peluru tambahan menyebar bergantian kiri-kanan.
       const n = 1 + p.mods.multi, life = B.life * p.mods.range;
+      p.flip = -(p.flip || 1);
       for (let i = 0; i < n; i++) {
-        const a = p.aim + (i - (n - 1) / 2) * 0.22;
+        const a = p.aim + (i === 0 ? 0 : (i % 2 ? 1 : -1) * p.flip * Math.ceil(i / 2) * 0.14);
         A.Projectiles.spawn(s.projectiles, {
           x: p.x + Math.cos(a) * p.r, y: p.y + Math.sin(a) * p.r,
           vx: Math.cos(a) * B.speed, vy: Math.sin(a) * B.speed,
